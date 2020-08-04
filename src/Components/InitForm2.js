@@ -10,8 +10,9 @@ export default function InitForm2({ tracks, numGioc, setPlayers, setInitForm2 })
         const tempFavs = Array(numGioc).fill(null);
         tempPlayers.forEach((pl, i) => {
             const nickName = (e.target[i * 2].value).split(' ');
+            const name = (nickName[0].length > 10) ? nickName[0].substr(0,10) : nickName[0];
             const plus = (nickName[1]) ? nickName[1].toUpperCase().charAt(0) : '';
-            tempPlayers[i] = new Player(nickName[0]+plus, tracks[e.target[(i * 2) + 1].value], 0, 0, 0);
+            tempPlayers[i] = new Player(name+plus, tracks[e.target[(i * 2) + 1].value], 0, 0, 0);
         });
         setPlayers(tempPlayers);
         setFavoriteTracks(tempFavs);

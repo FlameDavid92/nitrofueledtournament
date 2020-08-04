@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import MyModal from './MyModal.js';
 import { getRandomInt } from '../utils';
 
 export default function GameHelps({ names, numGioc, tipo, myTournament, setMyTournament, switchTracks, setSwitchTracks, currentGameId }) {
     const [arrayRiavviaSwitch, setArrayRiavviaSwitch] = useState(null);
+    const [textModal, setTextModal] = useState("");
+    const [clicksModal, setClicksModal] = useState(0);
+
     useEffect(() => {
         /*Scelta del numero di riavvia e switch per ogni tipo di torneo*/
         const tipoBig = { 'riavvia': 2, 'switch': 2 };
@@ -40,10 +44,13 @@ export default function GameHelps({ names, numGioc, tipo, myTournament, setMyTou
                     temp[i].switch -= 1;
                     setArrayRiavviaSwitch(temp);
                 }
-            }else{
-                alert("Non è possibile effettuare lo switch su una battaglia o su una gara preferita.")
+            } else {
+                setClicksModal((prev)=>prev+1);
+                setTextModal("Non è possibile effettuare Switch su una battaglia o su una gara preferita.");
+                //alert("Non è possibile effettuare Switch su una battaglia o su una gara preferita.")
             }
         } else {
+            //Per i tipi di torneo previsti finora questo non può accadere.
             alert("Errore durante lo switch, non è possibile effettuare lo switch");
         }
 
@@ -57,18 +64,30 @@ export default function GameHelps({ names, numGioc, tipo, myTournament, setMyTou
         }
     }
     const decrementRiavvia = (i) => {
-        if (arrayRiavviaSwitch[i].riavvia > 0) {
-            const temp = [...arrayRiavviaSwitch];
-            temp[i].riavvia -= 1;
-            setArrayRiavviaSwitch(temp);
+        if (myTournament[currentGameId].type === 'track' || myTournament[currentGameId].type === 'favorite') {
+            if (arrayRiavviaSwitch[i].riavvia > 0) {
+                const temp = [...arrayRiavviaSwitch];
+                temp[i].riavvia -= 1;
+                setArrayRiavviaSwitch(temp);
+            }
+        } else {
+            setClicksModal((prev)=>prev+1);
+            setTextModal("Non è possibile effettuare Riavvia su una battaglia.");
+            //alert("Non è possibile effettuare Riavvia su una battaglia.")
         }
     }
 
     const superRiavvia = (i) => {
-        if (arrayRiavviaSwitch[i].riavvia > 0) {
-            const temp = [...arrayRiavviaSwitch];
-            temp[i].riavvia -= 2;
-            setArrayRiavviaSwitch(temp);
+        if (myTournament[currentGameId].type === 'track' || myTournament[currentGameId].type === 'favorite') {
+            if (arrayRiavviaSwitch[i].riavvia > 0) {
+                const temp = [...arrayRiavviaSwitch];
+                temp[i].riavvia -= 2;
+                setArrayRiavviaSwitch(temp);
+            }
+        } else {
+            setClicksModal((prev)=>prev+1);
+            setTextModal("Non è possibile effettuare SuperRiavvia su una battaglia.");
+            //alert("Non è possibile effettuare SuperRiavvia su una battaglia.")
         }
     }
     return (<>
@@ -105,5 +124,6 @@ export default function GameHelps({ names, numGioc, tipo, myTournament, setMyTou
                 )
             })}
         </div>
+        <MyModal clicksModal={clicksModal} text={textModal}></MyModal>
     </>)
 }

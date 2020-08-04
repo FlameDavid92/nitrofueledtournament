@@ -16,6 +16,8 @@ function App() {
   const [audio, setAudio] = useState(false);
 
   return (
+    <>
+    <div id="divModale"/>
     <div className="container-fluid mt-2">
       {audio && <AudioPlayer />}
       <button onClick={()=>setAudio((prevAudio)=>!prevAudio)} className={"btn btn-sm " + (audio ? "btn-danger" : "btn-success")}>{audio ? "Audio OFF" : "Audio ON"}</button>
@@ -30,8 +32,8 @@ function App() {
           <MyTournament tipo={tipo} numGioc={numGioc} battles={nitroFueled.battles} tracks={nitroFueled.tracks} setPlayers={setPlayers} players={players}></MyTournament>
         </>
       )}
-
     </div >
+    </>
   );
 }
 
