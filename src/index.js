@@ -5,7 +5,10 @@ import App from './App';
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Davide
 ReactDOM.render(
   <React.StrictMode>
     <App />
