@@ -27,3 +27,64 @@ export function shuffle(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
+export function getWinner(players){
+    let tempWinners = [];
+    let tempPts = Number.POSITIVE_INFINITY;
+    players.forEach(pl => {
+        let plTot = pl.getTotalPoints();
+        if (plTot < tempPts) {
+            tempPts = pl.getTotalPoints();
+            tempWinners = [pl.name];
+        } else if (plTot === tempPts) {
+            tempWinners.push(pl.name);
+        }
+    });
+    if (tempWinners.length > 1) {
+        let winners = "";
+        tempWinners.forEach(w => winners += (w + " "));
+        return "Torneo concluso in parità, i vincitori sono: ;" + winners;
+    } else {
+        return "Vince il torneo: ;" + tempWinners[0];
+    }
+};
+export function getBtWinner(players){
+    let tempWinners = [];
+    let tempPts = Number.POSITIVE_INFINITY;
+    players.forEach(pl => {
+        let plTot = pl.battlePoints;
+        if (plTot < tempPts) {
+            tempPts = pl.battlePoints;
+            tempWinners = [pl.name];
+        } else if (plTot === tempPts) {
+            tempWinners.push(pl.name);
+        }
+    });
+    if (tempWinners.length > 1) {
+        let winners = "";
+        tempWinners.forEach(w => winners += (w + " "));
+        return "Premio battaglia in parità, i vincitori sono: ;" + winners;
+    } else {
+        return "Vince il premio battaglia: ;" + tempWinners[0];
+    }
+};
+export function getTrWinner(players){
+    let tempWinners = [];
+    let tempPts = Number.POSITIVE_INFINITY;
+    players.forEach(pl => {
+        let plTot = pl.trackPoints;
+        if (plTot < tempPts) {
+            tempPts = pl.trackPoints;
+            tempWinners = [pl.name];
+        } else if (plTot === tempPts) {
+            tempWinners.push(pl.name);
+        }
+    });
+    if (tempWinners.length > 1) {
+        let winners = "";
+        tempWinners.forEach(w => winners += (w + " "));
+        return "Premio gara in parità, i vincitori sono: ;" + winners;
+    } else {
+        return "Vince il premio gara: ;" + tempWinners[0];
+    }
+};
